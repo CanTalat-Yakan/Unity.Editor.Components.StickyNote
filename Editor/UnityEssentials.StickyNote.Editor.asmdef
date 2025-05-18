@@ -1,0 +1,16 @@
+{
+    "name": "UnityEssentials.StickyNote.Editor",
+    "rootNamespace": "UnityEssentials",
+    "references": [
+        "GUID:80416225243b840428619ea41b3f5b0f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
