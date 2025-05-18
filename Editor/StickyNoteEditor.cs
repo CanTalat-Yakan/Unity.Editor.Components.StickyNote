@@ -4,7 +4,7 @@ using UnityEngine;
 namespace UnityEssentials
 {
     [CustomEditor(typeof(StickyNote))]
-    public class StickyNoteEditor : Editor
+    public partial class StickyNoteEditor : Editor
     {
         private static readonly Color s_noteBackgroundColor = new Color(0.99f, 0.915f, 0.69f, 1f);
         private static readonly Color s_textColor = new Color(0.25f, 0.2f, 0.1f, 1f);
@@ -24,53 +24,45 @@ namespace UnityEssentials
 
         public override void OnInspectorGUI()
         {
-            StickyNote stickyNote = (StickyNote)target;
-            if (stickyNote == null) return;
+            serializedObject.Update();
+
+            SerializedProperty headerProp = serializedObject.FindProperty("_header");
+            SerializedProperty contentProp = serializedObject.FindProperty("_content");
+            SerializedProperty footerProp = serializedObject.FindProperty("_footer");
 
             if (_backgroundStyle == null || _headerTextStyle == null || _contentTextStyle == null || _footerTextStyle == null)
                 CreateStyles();
 
             Color oldColor = GUI.color;
             GUI.color = s_noteBackgroundColor;
-
             EditorGUILayout.BeginVertical(_backgroundStyle);
             GUI.color = oldColor;
 
-            // Calculate header height with padding consideration
             float headerWidth = EditorGUIUtility.currentViewWidth - _padding * 2;
-            float headerHeight = _headerTextStyle.CalcHeight(new GUIContent(stickyNote.Header), headerWidth);
+            float headerHeight = _headerTextStyle.CalcHeight(new GUIContent(headerProp.stringValue), headerWidth);
             headerHeight = Mathf.Max(headerHeight, _minHeaderHeight);
-
-            // Draw header without background
             Rect headerRect = GUILayoutUtility.GetRect(headerWidth, headerHeight);
-            stickyNote.Header = EditorGUI.TextField(headerRect, stickyNote.Header, _headerTextStyle);
+            headerProp.stringValue = EditorGUI.TextField(headerRect, headerProp.stringValue, _headerTextStyle);
 
-            EditorGUILayout.Space(10); // Add spacing
+            EditorGUILayout.Space(10);
 
-            // Calculate content height with padding consideration
             float contentWidth = EditorGUIUtility.currentViewWidth - _padding * 2;
-            float contentHeight = _contentTextStyle.CalcHeight(new GUIContent(stickyNote.Content), contentWidth - _offsetWidth);
+            float contentHeight = _contentTextStyle.CalcHeight(new GUIContent(contentProp.stringValue), contentWidth - _offsetWidth);
             contentHeight = Mathf.Max(contentHeight, _minContentHeight);
-
-            // Draw content without background
             Rect contentRect = GUILayoutUtility.GetRect(contentWidth, contentHeight);
-            stickyNote.Content = EditorGUI.TextField(contentRect, stickyNote.Content, _contentTextStyle);
+            contentProp.stringValue = EditorGUI.TextField(contentRect, contentProp.stringValue, _contentTextStyle);
 
-            EditorGUILayout.Space(10); // Add spacing
+            EditorGUILayout.Space(10);
 
-            // Calculate content height with padding consideration
             float footerWidth = EditorGUIUtility.currentViewWidth - _padding * 2;
-            float footerHeight = _footerTextStyle.CalcHeight(new GUIContent(stickyNote.Footer), footerWidth - _offsetWidth);
-            contentHeight = Mathf.Max(contentHeight, _minFooterHeight);
-
-            // Draw content without background
+            float footerHeight = _footerTextStyle.CalcHeight(new GUIContent(footerProp.stringValue), footerWidth - _offsetWidth);
+            footerHeight = Mathf.Max(footerHeight, _minFooterHeight);
             Rect footerRect = GUILayoutUtility.GetRect(footerWidth, footerHeight);
-            stickyNote.Footer = EditorGUI.TextField(footerRect, stickyNote.Footer, _footerTextStyle);
+            footerProp.stringValue = EditorGUI.TextField(footerRect, footerProp.stringValue, _footerTextStyle);
 
             EditorGUILayout.EndVertical();
 
-            if (GUI.changed)
-                EditorUtility.SetDirty(stickyNote);
+            serializedObject.ApplyModifiedProperties();
         }
 
         private void CreateStyles()

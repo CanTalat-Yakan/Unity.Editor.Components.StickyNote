@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UnityEssentials
 {
-    public class StickyNote : MonoBehaviour
+    public partial class StickyNote : MonoBehaviour
     {
         [SerializeField, TextArea()] private string _header = "New Note";
         [SerializeField, TextArea()] private string _content = "Write something here";
