@@ -21,7 +21,8 @@ namespace UnityEssentials
         private GUIStyle _contentTextStyle;
         private GUIStyle _footerTextStyle;
 
-        public void OnEnable() => CreateStyles();
+        public void OnEnable() => 
+            CreateStyles();
 
         public override void OnInspectorGUI()
         {
@@ -39,27 +40,27 @@ namespace UnityEssentials
             EditorGUILayout.BeginVertical(_backgroundStyle);
             GUI.color = oldColor;
 
-            float headerWidth = EditorGUIUtility.currentViewWidth - _padding * 2;
-            float headerHeight = _headerTextStyle.CalcHeight(new GUIContent(headerProp.stringValue), headerWidth);
+            var headerWidth = EditorGUIUtility.currentViewWidth - _padding * 2;
+            var headerHeight = _headerTextStyle.CalcHeight(new GUIContent(headerProp.stringValue), headerWidth);
             headerHeight = Mathf.Max(headerHeight, _minHeaderHeight);
-            Rect headerRect = GUILayoutUtility.GetRect(headerWidth, headerHeight);
-            headerProp.stringValue = EditorGUI.TextField(headerRect, headerProp.stringValue, _headerTextStyle);
+            var headerPosition = GUILayoutUtility.GetRect(headerWidth, headerHeight);
+            headerProp.stringValue = EditorGUI.TextField(headerPosition, headerProp.stringValue, _headerTextStyle);
 
             EditorGUILayout.Space(10);
 
-            float contentWidth = EditorGUIUtility.currentViewWidth - _padding * 2;
-            float contentHeight = _contentTextStyle.CalcHeight(new GUIContent(contentProp.stringValue), contentWidth - _offsetWidth);
+            var contentWidth = EditorGUIUtility.currentViewWidth - _padding * 2;
+            var contentHeight = _contentTextStyle.CalcHeight(new GUIContent(contentProp.stringValue), contentWidth - _offsetWidth);
             contentHeight = Mathf.Max(contentHeight, _minContentHeight);
-            Rect contentRect = GUILayoutUtility.GetRect(contentWidth, contentHeight);
-            contentProp.stringValue = EditorGUI.TextField(contentRect, contentProp.stringValue, _contentTextStyle);
+            var contentPosition = GUILayoutUtility.GetRect(contentWidth, contentHeight);
+            contentProp.stringValue = EditorGUI.TextField(contentPosition, contentProp.stringValue, _contentTextStyle);
 
             EditorGUILayout.Space(10);
 
-            float footerWidth = EditorGUIUtility.currentViewWidth - _padding * 2;
-            float footerHeight = _footerTextStyle.CalcHeight(new GUIContent(footerProp.stringValue), footerWidth - _offsetWidth);
+            var footerWidth = EditorGUIUtility.currentViewWidth - _padding * 2;
+            var footerHeight = _footerTextStyle.CalcHeight(new GUIContent(footerProp.stringValue), footerWidth - _offsetWidth);
             footerHeight = Mathf.Max(footerHeight, _minFooterHeight);
-            Rect footerRect = GUILayoutUtility.GetRect(footerWidth, footerHeight);
-            footerProp.stringValue = EditorGUI.TextField(footerRect, footerProp.stringValue, _footerTextStyle);
+            var footerPosition = GUILayoutUtility.GetRect(footerWidth, footerHeight);
+            footerProp.stringValue = EditorGUI.TextField(footerPosition, footerProp.stringValue, _footerTextStyle);
 
             EditorGUILayout.EndVertical();
 
