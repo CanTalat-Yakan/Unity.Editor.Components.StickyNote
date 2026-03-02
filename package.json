@@ -1,10 +1,11 @@
 {
   "name": "com.unityessentials.editor.attributes.stickynote",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "displayName": "Editor Components StickyNote",
   "description": "This is a part of the UnityEssentials Ecosystem",
   "unity": "6000.0",
   "unityRelease": "",
+  "resolutionStrategy": "highestPatch",
   "dependencies": {},
   "keywords": [],
   "author": {
